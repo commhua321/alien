@@ -6,6 +6,8 @@ python入門學習中，練習使用pygame製作小遊戲
 
 遊戲為類似經典射擊，玩法為消除水母外星人
 
+下載打包版並執行happy_alien.exe即可遊戲
+
 遊戲畫面如下
 
 ![image](https://github.com/commhua321/happy_alien2/blob/master/Screenshots/game_image.jpg)
