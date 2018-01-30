@@ -8,7 +8,7 @@ python入門學習中，練習使用pygame製作小遊戲
 
 遊戲畫面如下
 
-![image](https://github.com/commhua321/happy_alien_2/blob/master/Screenshots/game_image.jpg)
+![image](https://github.com/commhua321/happy_alien2/blob/master/Screenshots/game_image.jpg)
 
 version 1.0 測試版
 
