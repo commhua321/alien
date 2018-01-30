@@ -1,0 +1,9 @@
+bgm
+https://maoudamashii.jokersounds.com/list/bgm11.html
+8bit 24
+音樂：魔王魂
+
+tama1
+tama2
+https://www.tam-music.com/se000_category/game
+音樂：TAM music factory

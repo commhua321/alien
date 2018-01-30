@@ -9,6 +9,10 @@ def check_keydown_events(event, ai_settings, screen, stats, sb, ship, aliens, bu
         ship.moving_right = True
     elif event.key == pygame.K_LEFT:
         ship.moving_left = True
+    elif event.key == pygame.K_UP:
+        ship.moving_up = True
+    elif event.key == pygame.K_DOWN:
+        ship.moving_down = True
     elif event.key == pygame.K_SPACE and stats.game_active:
         fire_bullet(ai_settings, screen, ship, bullets)
     elif event.key == pygame.K_q:
@@ -27,6 +31,10 @@ def check_keyup_events(event, ship):
         ship.moving_right = False
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
+    elif event.key == pygame.K_UP:
+        ship.moving_up = False
+    elif event.key == pygame.K_DOWN:
+        ship.moving_down = False
 
 def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets):
     for event in pygame.event.get():
@@ -49,6 +57,8 @@ def start_game(ai_settings, screen, stats, sb, ship, aliens, bullets):
     pygame.mouse.set_visible(False)
     stats.reset_stats()
     stats.game_active = True
+    pygame.mixer.music.play()
+
 
     sb.prep_score()
     sb.prep_high_score()
@@ -62,7 +72,9 @@ def start_game(ai_settings, screen, stats, sb, ship, aliens, bullets):
     ship.center_ship()
 
 def update_screen(ai_settings, screen, stats, sb, ship, aliens,  bullets, play_button):
+    #填充背景
     screen.fill(ai_settings.bg_color)
+
     sb.show_score()
     if not stats.game_active:
         play_button.draw_button()
@@ -71,7 +83,10 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens,  bullets, play_b
         bullet.draw_bullet()
     ship.blitme()
     aliens.draw(screen)
+    #更新介面(一次性刷圖避免閃爍性)
     pygame.display.flip()
+    #固定FPS
+    pygame.time.Clock().tick(200)
 
 def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
     bullets.update()
@@ -138,8 +153,9 @@ def update_aliens(ai_settings, stats, screen, sb, ship, aliens, bullets):
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
 
-    if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets)
+    for alien in aliens.sprites():
+        if pygame.sprite.collide_circle_ratio(0.7)(ship, alien):
+            ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets)
 
     check_alien_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets)
 
@@ -159,6 +175,10 @@ def ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets):
         sleep(0.5)
     else:
         stats.game_active = False
+        pygame.mixer.music.pause()
+        game_over_sound = pygame.mixer.Sound("sounds/game_over.wav")
+        game_over_sound.set_volume(0.2)
+        game_over_sound.play()
         pygame.mouse.set_visible(True)
 
 def check_alien_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets):
