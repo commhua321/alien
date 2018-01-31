@@ -15,7 +15,7 @@ TAM music factory
 
 
 前置作業：
-使用pip安裝Python包，並使用pip來執行安裝Pygame
+安裝Python，並使用pip來執行安裝Pygame
 
 
 需要工具
