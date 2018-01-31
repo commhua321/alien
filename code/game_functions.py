@@ -4,7 +4,11 @@ import pygame
 from bullet import Bullet
 from alien import Alien
 
-def check_keydown_events(event, ai_settings, screen, stats, sb, ship, aliens, bullets):
+
+
+
+
+def check_keydown_events(event, ai_settings, screen, stats, sb, ship, aliens, bullets,shoot_sound):
     if event.key == pygame.K_RIGHT:
         ship.moving_right = True
     elif event.key == pygame.K_LEFT:
@@ -14,17 +18,21 @@ def check_keydown_events(event, ai_settings, screen, stats, sb, ship, aliens, bu
     elif event.key == pygame.K_DOWN:
         ship.moving_down = True
     elif event.key == pygame.K_SPACE and stats.game_active:
-        fire_bullet(ai_settings, screen, ship, bullets)
+        shoot_sound.play()
+        fire_bullet(ai_settings, screen, ship, bullets,shoot_sound)
     elif event.key == pygame.K_q:
         sys.exit()
     elif event.key == pygame.K_s and not stats.game_active:
         start_game(ai_settings, screen, stats, sb, ship, aliens, bullets)
 
 
-def fire_bullet(ai_settings, screen, ship, bullets):
+def fire_bullet(ai_settings, screen, ship, bullets,shoot_sound):
+
+
     if len(bullets) < ai_settings.bullets_allowed:
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
+
 
 def check_keyup_events(event, ship):
     if event.key == pygame.K_RIGHT:
@@ -36,12 +44,12 @@ def check_keyup_events(event, ship):
     elif event.key == pygame.K_DOWN:
         ship.moving_down = False
 
-def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets):
+def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets,shoot_sound):
     for event in pygame.event.get():
         if event.type ==pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_settings, screen, stats, sb, ship, aliens, bullets)
+            check_keydown_events(event, ai_settings, screen, stats, sb, ship, aliens, bullets,shoot_sound)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -86,7 +94,7 @@ def update_screen(ai_settings, screen, stats, sb, ship, aliens,  bullets, play_b
     #更新介面(一次性刷圖避免閃爍性)
     pygame.display.flip()
     #固定FPS
-    pygame.time.Clock().tick(200)
+    pygame.time.Clock().tick(400)
 
 def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
     bullets.update()

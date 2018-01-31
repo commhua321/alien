@@ -18,7 +18,8 @@ def run_game():
     #載入bgm
     pygame.mixer.music.load("sounds/bgm_maoudamashii_8bit24.ogg")
     pygame.mixer.music.set_volume(0.2)
-
+    shoot_sound = pygame.mixer.Sound("sounds/tama1.wav")
+    shoot_sound.set_volume(0.2)
 
     #載入遊戲設定值
     ai_settings = Settings()
@@ -45,7 +46,7 @@ def run_game():
     #主要遊戲迴圈
     while True:
         #確認按鍵反應
-        gf.check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets)
+        gf.check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bullets,shoot_sound)
 
         #active game
         if stats.game_active:
