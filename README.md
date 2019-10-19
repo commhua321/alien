@@ -1,4 +1,3 @@
-# happy_alien_2
 
 練習使用pygame製作小遊戲
 
